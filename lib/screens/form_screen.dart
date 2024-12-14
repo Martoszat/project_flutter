@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:primeiro_projeto/data/task_inherited.dart';
 import 'package:primeiro_projeto/screens/initial_screen.dart';
+import 'package:provider/provider.dart';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({super.key, required this.taskContext});
@@ -119,14 +120,20 @@ class _FormScreenState extends State<FormScreen> {
                         )),
                   ),
                   ElevatedButton(
-                      onPressed: (){
+                      onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          TaskInherited task = TaskInherited();
-                          task.newTask(nameController.text, imageController.text, int.parse(difficultyController.text));
+                          Provider.of<TaskInherited>(widget.taskContext, listen: false)
+                              .newTask(
+                            nameController.text,
+                            imageController.text,
+                            int.parse(difficultyController.text),
+                          );
+                          // TaskInherited task = TaskInherited();
+                          // task.newTask(nameController.text, imageController.text, int.parse(difficultyController.text));
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                   content: Text('Salvando nova tarefa')));
-                           Navigator.pop(widget.taskContext);
+                          Navigator.pop(widget.taskContext);
                           // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const InitialScreen()));
                         }
                       },
