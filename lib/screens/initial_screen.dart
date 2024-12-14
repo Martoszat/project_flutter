@@ -50,9 +50,11 @@ class InitialScreen extends StatelessWidget {
       ),
       body: Consumer<TaskInherited>(
         builder: (context, taskInherited, child) {
-          return ListView(
-            children: taskInherited.taskList,
-          );
+          return ListView.builder(
+            itemCount: taskInherited.taskList.length,
+            itemBuilder: (context, index){
+            return taskInherited.taskList[index];
+          });
         },
       ),
       floatingActionButton: FloatingActionButton(
